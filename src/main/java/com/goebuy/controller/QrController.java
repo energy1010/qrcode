@@ -1,16 +1,15 @@
 package com.goebuy.controller;
 
-import java.util.TreeSet;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
 import com.goebuy.Question;
 
 import io.swagger.annotations.ApiImplicitParam;
@@ -18,7 +17,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  */
-@RestController
+@Controller
 public class QrController {
 	
 	
@@ -41,11 +40,38 @@ public class QrController {
 //	
 	
 	
+//	@ApiOperation(value="get question", notes="扫描二维码之后跳转到对应question")
+//	@ApiImplicitParam(name = "id", value = "question ID", paramType = "path", required = true, dataType = "Integer")
+//	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+//	@ResponseBody
+//    public ResponseEntity<Object> get( @PathVariable int id) {
+//        System.out.println("get id: "+ id);
+//        Question question = new Question();
+//        question.addChoices(1, "choice 1");
+//        question.addChoices(2, "choice 2");
+//        question.addChoices(3, "choice 3");
+//        question.addChoices(4, "choice 4");
+//        question.setQuestion("this is question");
+//        question.addAnsId(2);
+//        question.setAns_desc("ans_desc");
+//        question.setDesc("desc");
+//        JSONObject js = new JSONObject();
+//		js.put("data", question);
+//		js.put("code", 200);
+//		js.put("msg", "OK");
+//		return ResponseEntity.status(HttpStatus.OK).body(js);
+//    }
+		
+	/**
+	 * Spring Boot+Thymeleaf
+	 * @param id
+	 * @param model
+	 * @return
+	 */
 	@ApiOperation(value="get question", notes="扫描二维码之后跳转到对应question")
 	@ApiImplicitParam(name = "id", value = "question ID", paramType = "path", required = true, dataType = "Integer")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	@ResponseBody
-    public ResponseEntity<Object> get( @PathVariable int id) {
+    public String get( @PathVariable int id, ModelMap model) {
         System.out.println("get id: "+ id);
         Question question = new Question();
         question.addChoices(1, "choice 1");
@@ -56,12 +82,29 @@ public class QrController {
         question.addAnsId(2);
         question.setAns_desc("ans_desc");
         question.setDesc("desc");
-        JSONObject js = new JSONObject();
-		js.put("data", question);
-		js.put("code", 200);
-		js.put("msg", "OK");
-		return ResponseEntity.status(HttpStatus.OK).body(js);
+        model.addAttribute("question", question);
+        return "question/detail";
     }
-		
+//	https://blog.csdn.net/u012706811/article/details/52185345
+	
+	 @RequestMapping("/list")
+    public String  listUser(ModelMap model) {
+        List<Question> questionList = new ArrayList<Question>();
+        for (int i = 0; i <10; i++) {
+        	Question question = new Question(i);
+            question.addChoices(1, "choice 1");
+            question.addChoices(2, "choice 2");
+            question.addChoices(3, "choice 3");
+            question.addChoices(4, "choice 4");
+            question.setQuestion("this is question"+i);
+            question.addAnsId(2);
+            question.setAns_desc("ans_desc");
+            question.setDesc("desc");
+        	questionList.add(question);
+        }
+        
+        model.addAttribute("questions", questionList);
+        return "question/list";
+    }
 	
 }

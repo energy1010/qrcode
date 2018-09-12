@@ -42,7 +42,13 @@ public class Question implements Serializable{
 	
 	
 	
+	public Question() {
+		
+	}
 	
+	public Question(int id) {
+		this.id=id;
+	}
 	
 	public int getId() {
 		return id;
