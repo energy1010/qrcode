@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
  * 
  */
 @Controller
+@RequestMapping(value = "question")
 public class QrController {
 	
 	@Autowired
@@ -92,7 +93,7 @@ public class QrController {
 //	https://blog.csdn.net/u012706811/article/details/52185345
 	
 	@ApiOperation(value="list question", notes="list question")
-	 @RequestMapping("/list")
+	 @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String  list(ModelMap model) {
         List<Question> questionList = new ArrayList<Question>();
         for (int i = 0; i <10; i++) {
@@ -113,7 +114,7 @@ public class QrController {
     }
 	
 	@ApiOperation(value="add question", notes="add question")
-	 @RequestMapping("/add")
+	 @RequestMapping(value="/add" , method = RequestMethod.POST)
    public String  save(ModelMap model) {
        List<Question> questionList = new ArrayList<Question>();
        for (int i = 0; i <10; i++) {

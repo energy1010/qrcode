@@ -1,6 +1,17 @@
 # qrcode-google-zxing
 zxing二维码生成
 
+## 技术栈
+
+### 后端
+* Spring Boot
+
+### 前端
+* thymeleaf
+* js
+* jquery
+* todo: vue
+
 
 http://localhost:8080/swagger-ui.html
 
