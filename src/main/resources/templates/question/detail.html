@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+</head>
+<body>
+<h2>detail</h2>
+detail 
+ <div >
+  id: <span th:text="${question.id}"></span>
+  question: <span th:text="${question.question}"></span>
+     <ul style="list-style:none;">
+         <li  th:each="choice_id, choice_desc:${question.choices}">
+            <label><input type="radio"  /><span th:text="${choice_desc.current.value}"></span></label> 
+         </li>
+     </ul>
+    <!--  <span th:text="${choice_desc.current.value}"></span> -->
+   
+   </div> 
+   
+    <div >
+     <ul style="list-style:none;">
+         <li  th:each="ans_id:${question.ans_id}">
+              ans_id:<span th:text="${ans_id}"></span>
+         </li>
+     </ul>
+              ans_desc:<span th:text="${question.ans_desc}"></span>
+              url:<span th:text="${question.url}"></span>
+             qrcode:<span th:text="${question.qrcode}"></span>
+             
+<!-- 
+<img src="../../images/gtvglogo.png" th:attr="src=@{/images/gtvglogo.png},title=#{logo},alt="qrcode" />
+ -->
+              
+   </div> 
+<!--    <script th:src="@{/jquery/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script th:inline="javascript">
+    var single = [[${singlePerson}]];
+    console.log(single.name+"/"+single.age);
+    function getName(name) {
+        console.log(name);
+    }
+    </script> -->
+</body>
+</html>

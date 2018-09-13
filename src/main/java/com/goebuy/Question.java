@@ -7,6 +7,9 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSON;
+import com.goebuy.entity.QuestionEntity;
+
+
 
 public class Question implements Serializable{
 
@@ -39,7 +42,6 @@ public class Question implements Serializable{
 	private String url;
 	
 	private String qrcode;
-	
 	
 	
 	public Question() {
@@ -143,7 +145,30 @@ public class Question implements Serializable{
 		return obj;
 	}
 	
-	
+//	public Question convertFromQuestionEntity(QuestionEntity questionEntity) {
+//		if(questionEntity!=null) {
+//			this.id=questionEntity.getId();
+//			this.question=questionEntity.getQuestion();
+//			Map<Integer, String> choice_map = (Map<Integer, String>) JSON.parse(questionEntity.getChoices());
+//			if(choice_map!=null && !choice_map.isEmpty()) {
+//				this.choices.clear();
+//				for(Map.Entry<Integer, String> e: choice_map.entrySet()) {
+//				this.addChoices(e.getKey(), e.getValue());
+//			}
+//			}
+//			Set<Integer> ans_set = (Set<Integer>) JSON.parse(questionEntity.getAns_id());
+//			if(ans_set!=null && !ans_set.isEmpty()) {
+//				this.ans_id.clear();
+//				for(Integer i: ans_set) {
+//					this.ans_id.add(i);
+//				}
+//			}
+//			this.ans_desc = questionEntity.getAns_desc();
+//			this.desc = questionEntity.getDesc();
+//			
+//		}
+//		return this;
+//	}
 	
 	
 }

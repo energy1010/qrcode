@@ -3,24 +3,28 @@ package com.goebuy.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.goebuy.Question;
+import com.goebuy.entity.QuestionEntity;
+import com.goebuy.repository.QuestionRepository;
 
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 /**
+ * 
  */
 @Controller
 public class QrController {
 	
-	
+	@Autowired
+	QuestionRepository service;
 //	@ApiOperation(value="get method", notes="生成二维码")
 //	@RequestMapping(value = "/", method = RequestMethod.GET)
 //    public void get(@RequestParam(name = "w",defaultValue = "200",required = false) int width,
@@ -87,8 +91,9 @@ public class QrController {
     }
 //	https://blog.csdn.net/u012706811/article/details/52185345
 	
+	@ApiOperation(value="list question", notes="list question")
 	 @RequestMapping("/list")
-    public String  listUser(ModelMap model) {
+    public String  list(ModelMap model) {
         List<Question> questionList = new ArrayList<Question>();
         for (int i = 0; i <10; i++) {
         	Question question = new Question(i);
@@ -107,4 +112,46 @@ public class QrController {
         return "question/list";
     }
 	
+	@ApiOperation(value="add question", notes="add question")
+	 @RequestMapping("/add")
+   public String  save(ModelMap model) {
+       List<Question> questionList = new ArrayList<Question>();
+       for (int i = 0; i <10; i++) {
+//       	Question question = new Question(i);
+//           question.addChoices(1, "choice 1");
+//           question.addChoices(2, "choice 2");
+//           question.addChoices(3, "choice 3");
+//           question.addChoices(4, "choice 4");
+//           question.setQuestion("this is question"+i);
+//           question.addAnsId(2);
+//           question.setAns_desc("ans_desc");
+//           question.setDesc("desc");
+    	   QuestionEntity questionEntity = new QuestionEntity();
+//    	   if(service.findOne(i)!=null) {
+//    		   service.saveAndFlush(entity)
+//    	   }
+    	   questionEntity.setId(i);
+   		questionEntity.setAns_desc("asc_desc"+i);
+   		questionEntity.setAns_id("[1,2]");
+   		questionEntity.setChoices("{\"1\":\"Choice 1\", \"2\":\"Choice 2\",\"3\":\"Choice 3\" }");
+   		questionEntity.setDesc("desc"+i);
+   		questionEntity.setQuestion("question"+i);
+   		service.saveAndFlush(questionEntity);
+//       	questionList.add(question);
+       }
+       
+       model.addAttribute("questions", questionList);
+       return "question/list";
+   }
+	
+	
+	
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 }
