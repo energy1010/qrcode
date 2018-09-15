@@ -9,6 +9,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -162,11 +164,16 @@ public class QRCodeUtil {
   }
   
   public static void main(String[] args) {
-	  String content="http://www.baidu.com"; //succ
+	  String host ="http://192.168.1.100";
+	  String port ="80";
+	  for(int i=1;i<=108;i++) {
+	  String content="http://"+host+"/question/"+i; //succ
+	  System.out.println(content);
 //	  String content="www.baidu.com"; //failed
 	  int width=200;
 	  int height =200;
-	  QRCodeUtil.encoderQRCode(content, "qrcode");
+	  QRCodeUtil.encoderQRCode(content, "qrcode_"+i);
+	  }
 	
 }
   

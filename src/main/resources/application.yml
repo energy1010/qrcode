@@ -1,5 +1,6 @@
 server:
-  port: 8080
+  host: 192.168.1.100
+  port: 80
   #tomcat:
     #uri-encoding: UTF-8
 spring:
@@ -13,8 +14,8 @@ spring:
     show-sql: true
     #hibernate ddl auto(validate,create,update,create-drop)
     hibernate:
-      ddl-auto: create
-      #ddl-auto: update
+      #ddl-auto: create
+      ddl-auto: update
       #naming:
         #strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
@@ -28,3 +29,4 @@ spring:
     encoding: UTF-8
     content-type: text/html
     mode: HTML5
+    
