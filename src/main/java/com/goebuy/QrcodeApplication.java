@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 //@EnableJpaRepositories(basePackages={"com.goebuy.**.repository"})
 //@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class,HibernateJpaAutoConfiguration.class})
-//@EnableSwagger2
+@EnableSwagger2
 @EnableAutoConfiguration
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.goebuy.**.**"})

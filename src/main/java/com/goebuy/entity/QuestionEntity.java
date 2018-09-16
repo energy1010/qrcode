@@ -43,16 +43,25 @@ public class QuestionEntity implements Serializable{
 	/**
 	 * 提问
 	 */
+	@Basic
+    @Column(name = "`question`",   nullable = false )
 	private String question;
 	
 	/** 选项 */
+	@Basic
+    @Column(name = "`choices`",  columnDefinition="text", nullable = false )
 	private String choices;// = new TreeMap<>();
 	
 	/** 答案选项  */
+	@Basic
+    @Column(name = "`ans_id`",   nullable =  false )
 	private String ans_id;// = new TreeSet<>();
 	
 	/** 答案解释 */
+	@Basic
+    @Column(name = "`ans_desc`",   nullable = true)
 	private String ans_desc;
+	
 	/** 说明 */
 	@Basic
     @Column(name = "`desc`",   nullable = true)
@@ -162,12 +171,6 @@ public class QuestionEntity implements Serializable{
 		question.setQuestion(this.getQuestion());
 		question.setDesc(this.getDesc());
 		
-//		String ans_id = questionEntity.getAns_id().substring(1,questionEntity.getAns_id().length()-1 );
-////		String choices
-////		Map<Integer, String> cmMap= (Map<Integer, String>) JSON.toJSON(questionEntity.getChoices());
-//		for(String s: ans_id.split(",")) {
-//			question.addAnsId(Integer.parseInt(s));
-//		}
 		@SuppressWarnings("unchecked")
 		Set<Integer> ans_set = JSON.parseObject(this.getAns_id(), new TypeReference<TreeSet>() {} );
 		@SuppressWarnings("unchecked")

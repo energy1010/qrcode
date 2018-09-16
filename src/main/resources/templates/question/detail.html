@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta content="text/html;charset=UTF-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1, minimum-scale=0.3,maximum-scale=1.5,user-scalable=yes"/>
 
 <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
                         
@@ -20,8 +20,7 @@ body {
 
 		/* 16:9; */
 		#main{
-			margin-top: 20px;
-			top:80px;
+			top:20px;
 			width:540px;
 			height:960px;
 			background-image: url(../../background.png) ;
@@ -142,6 +141,10 @@ z-index: 99;
 
 }
 
+.choice{
+font-size:28px;
+}
+
 	</style>
     
     
@@ -176,8 +179,8 @@ z-index: 99;
               
 
 	<p th:each="choice, choice_desc:${question.choices}">
-	 <input class="choice" style="display:inline-block;"  th:id="${choice.key}"  type="checkbox"  th:value="${choice.key}"  onclick="checkboxOnclick(this)" >
-     <span th:text="${choice.value}" style=""></span></input>
+	 <input  style="display:inline-block;"  th:id="${choice.key}"  type="checkbox"  th:value="${choice.key}"  onclick="checkboxOnclick(this)" >
+     <span class="choice" th:text="${choice.value}" style=""></span></input>
      </p>
 	</div>
 		</div>  
@@ -262,12 +265,12 @@ if ( checkbox.checked){
 		 qid=data["qid"];
 		 }   
 		
-		 console.log('flag: '+flag + 'cnt: '+cnt );
-		 console.log('code: '+code + 'ans: '+ans  + 'qid'+qid);
+		 console.log('flag: '+flag + ' cnt: '+cnt );
+		 console.log('code: '+code + ' ans: '+ans  + 'qid'+qid);
 		if(flag){
 			 playSound("../../right.mp3"); 
 		var popUp = document.getElementById("popupcontent");
-		if(cnt==1||cur=='1'){
+		if(cnt==1 ){
 		popUp.style.visibility = "visible";
 		}else if(cnt==2 || cnt==3){
 		var popUp = document.getElementById("popupcontent_true");
@@ -303,27 +306,54 @@ if ( checkbox.checked){
 function playSound(src){
 	 var _s = $("#bg_audio"); 
 	 if( _s  ){
-	 /*  _s.src = src;
-	  _s.autoplay="autoplay"; */
 	  _s.prop("src",src);
 	  _s.prop("autoplay","autoplay");
 	 }
 
 };
 
-
+function adjWrapContent(){
+	var wrap_h = $("#wrap").height();
+	console.log("wrap height:"+ wrap_h);
+	fs = $(".choice").css('font-size');
+	lh = $("#wrap").css('line-height');
+/* 	console.log("font size: " + fs);
+	console.log("lh: "+ lh); */
+	/* if(!fs){
+		fs = "32";
+	} */
+	fs = parseInt(fs.substr(0,fs.length-2), 10);//remove px;
+	console.log("font size: " + fs);
+	if( wrap_h>400){
+		wrap_h = $("#wrap").height();
+		while(wrap_h>360){
+			fs -= 2;
+			$("#wrap").css("line-height", "0.8");
+			$(".choice").css('font-size', fs+'px' );
+			wrap_h = $("#wrap").height();
+			console.log("wrap height:"+ wrap_h);
+			console.lh("lh: "+ lh);
+		}
+		console.log("font size: " + fs)
+		console.log("lh: "+ lh);
+	}
+	
+}
 
 $(document).ready(function(){//页面加载完之后，自动执行该方法
 	console.log("ready");
 	var timer=null;
 	$("#content").hide();
 setTimeout(function(){//定时器 
-	$("#title").fadeIn(1000, function(){
+	$("#title").fadeOut(1000, function(){
 		
 $("#title").css("display","none")
 $("#head").animate( {top:'0px'}, 1500, function(){
-$("#content").css("display","show");
+	
+/* $("#content").css("display","show"); */
+
 $("#content").show();	
+adjWrapContent();
 }
 )
 	

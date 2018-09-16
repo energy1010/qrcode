@@ -52,8 +52,7 @@ public class QrcodeApplicationTests extends TestCase {
 	protected void setUp() throws Exception {
 		System.out.println("setup");
 		super.setUp();
-		
-//		assertNotNull(biz);
+		assertNotNull(writeDb);
 	}
 	
 	@Override
@@ -70,6 +69,7 @@ public class QrcodeApplicationTests extends TestCase {
 		System.out.println("after");
 	}
 	
+	@Ignore
 	@Test
 	public void TestFile() {
 		System.out.println("testFile");
@@ -92,7 +92,12 @@ public class QrcodeApplicationTests extends TestCase {
 	@Ignore
 	@Test
 	public void testCount() {
-//		WriteDb writeDb = new WriteDb();
+		WriteDb writeDb = new WriteDb();
+	}
+	
+	@Ignore
+	@Test
+	public void testWriteDb() {
 		writeDb.ReadFile();
 		System.out.println(service.count());
 	}
@@ -147,7 +152,7 @@ public class QrcodeApplicationTests extends TestCase {
 		questionEntity.setQuestion("question");
 		service.save(questionEntity);
 	}
-	
+	@Ignore
 	@Test
 	public void testFind() {
 		QuestionEntity questionEntity = service.findOne(1);
@@ -155,6 +160,7 @@ public class QrcodeApplicationTests extends TestCase {
 		System.out.println(question);
 	}
 	
+	@Ignore
 	@Test
 	public void testConf() {
 		String host= env.getProperty("server.host");
