@@ -1,0 +1,39 @@
+server:
+  #address: 0.0.0.0
+  host: 192.168.1.100
+  #host: 39.105.56.70
+  port: 8080
+  #contextPath=/prefix/
+  #tomcat:
+    #uri-encoding: UTF-8
+spring:
+  datasource:
+    host: 192.168.1.100
+    #host: 39.105.56.70
+    port: 3306
+    #url: jdbc:mysql://39.105.56.70:3306/qrcode?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/qrcode?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    database: MYSQL
+    show-sql: true
+    #hibernate ddl auto(validate,create,update,create-drop)
+    hibernate:
+      #ddl-auto: create
+      ddl-auto: update
+      #naming:
+        #strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    check-template-location: true
+    suffix: .html
+    encoding: UTF-8
+    content-type: text/html
+    mode: HTML5
+    

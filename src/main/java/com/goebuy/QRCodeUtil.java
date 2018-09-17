@@ -166,14 +166,14 @@ public class QRCodeUtil {
   public static void main(String[] args) {
 	  String host ="192.168.1.100";
 //	  host="39.105.56.70";
-//	  host="wwww.huiyibuer.com";
-	  host="wwww.huiyibuer.cn";
+	  host="www.huiyibuer.com";
+//	  host="www.huiyibuer.cn";
 	  
 	  String port ="80";
-//	  port = "8080";
+	  port = "8080";
 	  
 	  System.out.printf("host:%s port:%s\n", host, port);
-	  
+//	  http://www.huiyibuer.com/question/10
 	  for(int i=1;i<=108;i++) {
 		  String url="http://"+host+":"+port+"/question/"+i; //succ
 		  if(port.equals("80")) {

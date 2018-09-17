@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=0.6, minimum-scale=0.3,maximum-scale=1.5,user-scalable=yes"/>
+
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+                        
+    <title>雅安茶厂</title>
+    
+    <style type="text/css">
+
+body {
+    margin: 0;
+    font-size: 32px;
+    color: #333;
+    line-height: 1.01;
+
+}
+
+		/* 16:9; */
+		#main{
+			top:20px;
+			width:540px;
+			height:960px;
+			background-image: url(../../background.png) ;
+			/* border: 6px solid black; */
+			margin: auto;
+			position:relative;
+			overflow-y: none;
+		}
+
+		#head{
+			width:540px;
+			/* margin-left:10px; */
+			/* border: 1px solid red; */
+			top:400px;
+			/*height:auto;*/
+			/* margin: auto;*/
+			z-index:2;
+			position:absolute;
+			overflow-y: hidden;
+			/*top:10px;*/
+		}
+
+
+	#title{	
+		margin:auto;
+		left:90px;
+		top: 280px;
+		width: 360px;
+	/* 	border: 1px solid red; */
+		z-index:10;
+		position:absolute;
+	}
+
+		#content{
+			width:540px;
+			height: 400px;
+			max-height:480px;
+			/*height:auto;*/
+			z-index:5;
+			/* border: 1px solid green; */
+			position:absolute;
+			/* background-color: red; */
+			bottom: 300px;
+			overflow-y: hidden;
+			display:hidden;
+		}
+		
+		#wrap > input {
+		display:inline-block;
+		margin-right:15px;
+		margin-top:25px;
+		}
+
+		#foot{
+			/* margin-top: 680px */
+			width:540px;
+			/* border: 1px solid blue; */
+			height:auto;
+			/* margin: auto;*/
+			z-index:3; 
+			position: absolute; 
+			bottom: -15px;
+			}
+
+/*弹出窗口	*/		
+#popupcontent{
+width:320px;
+height:auto;
+min-height:265px;
+background-image: url(../../frame.png) ;
+left:110px;
+top:300px;
+position: absolute;
+visibility: hidden; 
+overflow: hidden;
+/* border:1px solid #333; */
+ text-align:center;
+  font-size: 16px;
+z-index: 99;
+}
+
+#popupcontent_err{
+width:320px;
+height:auto;
+min-height:265px;
+background-image: url(../../frame.png) ;
+left:110px;
+top:300px;
+position: absolute;
+/*visibility: hidden;*/
+visibility: hidden; 
+overflow: hidden;
+/* 
+border:1px solid #333; */
+ text-align:center;
+  font-size: 16px;
+z-index: 99;
+}
+
+#popupcontent_true{
+width:360px;
+height:auto;
+min-height:265px;
+background-image: url(../../true.png);
+left:90px;
+top:300px;
+position: absolute;
+visibility: hidden;
+overflow: hidden;
+/* border:1px solid #333; */
+ text-align:center;
+  font-size: 16px;
+z-index: 99;
+}
+
+#wrap{
+	padding-left: 30px;
+
+}
+
+.choice{
+font-size:28px;
+}
+
+	</style>
+    
+    
+<script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js">
+</script>
+</head>
+
+
+<body>
+
+ <div id="main">
+
+		<div id="head" >
+			<img src="../../door.png"  style="" />
+		</div>
+
+		<div id="title">
+			<img src="../../title.png"  style="" />			
+		</div>
+	
+	 	<div id="content">
+	 	 <!--  <bgsound id="bg_audio" loop="0" src="">  controls="controls"-->
+	 	<audio id="bg_audio"  preload="auto"   src="../../fail.wav"></audio>
+           <!--  <span th:if="${question==null}"
+                  th:text="question is null'">
+            </span>
+ -->
+			<div id="wrap" style="margin-top:30px;margin-left:20px;line-height:100%;">
+					
+			 <span th:text="${question.question}" class="ques_title"  style="display:block;"></span>
+		 <span  th:text="${question.id}" id="ques_id" th:value="${question.id}" hidden="hidden" />
+              
+
+	<p th:each="choice, choice_desc:${question.choices}">
+	 <input  style="display:inline-block;"  th:id="${choice.key}"  type="checkbox"  th:value="${choice.key}"  onclick="checkboxOnclick(this)" >
+     <span class="choice" th:text="${choice.value}" style=""></span></input>
+     </p>
+	</div>
+		</div>  
+		 
+		<div id="foot">
+			<img src="../../hores.png" width="540px" height="auto"  style="" />
+		</div>	
+
+		
+		<div id="popupcontent"> 
+		<i  id="closewin" onclick="closePop( $('#popupcontent'));" class="fa fa-close" style="display:inline-block; right:20px; top:25px; position:absolute;"></i>
+	<img src="../../tea.png" style="display:inline-block;margin:auto;margin-top:50px;" /><img src="../../tea.png" style="display:inline-block;margin:auto;margin-top:50px;" />
+		<img src="../../right.png"  style="display:block;margin:auto;margin-top:-40px;" />
+		
+<span style="display:block;margin-top:-20px;">(请联系工作人员领取奖品)</span>		
+		</div>
+		
+		
+ <div id="popupcontent_true">
+ <i  id="closewin" onclick="closePop( $('#popupcontent_true'));" class="fa fa-close" style="display:inline-block; right:20px; top:25px; position:absolute;"></i>
+<span style="display:block;margin-top:220px;">(请联系工作人员领取奖品)</span>	
+ </div>
+ 
+<div id="popupcontent_err"> 
+<i  id="closewin" onclick="closePop( $('#popupcontent_err'));" class="fa fa-close" style="display:inline-block; right:20px; top:25px; position:absolute;"></i>
+<img src="../../fail.png"  style="display:block;margin:auto;margin-top:65px;" />
+<span id="ques_ans" style="display:block;margin-top:25px;color:green;" th:text="none"></span>
+</div>
+	</div>
+
+
+    
+    
+    <script type="text/javascript">
+    
+    function closePop(obj){
+    	 obj.hide(); 
+    	/* obj.style.visibility = "visible"; */
+    }
+	
+
+	function disableCheckbox(flag){
+		$('.choice').each(function(){
+		$(this).prop("readonly",true)//将input元素设置为readonly  
+		$(this).prop("disabled",true);
+		//alert(this);
+		});
+	}
+	
+	
+function checkboxOnclick(checkbox){
+
+if ( checkbox.checked){
+ 
+ console.log(checkbox);
+ 
+ var cid = checkbox.value;
+ console.log("cid: " +cid);
+ var qid= $('#ques_id').text();
+ console.log("ques_id: " +qid);
+ var url = "/question/"+qid+ "/check?select="+cid;
+ console.log("url: " +url);
+  $.ajax(
+		  {
+	  url:url, method:'get', 
+	 success: function(data){
+		 console.log('success');
+		 /* alert(data); */
+		 console.log("data: " +data);
+		  var flag=null;
+		 var cnt =0;
+		 var code =null;
+		 var qid =null;
+		 var ans= null;
+		 var ans_new=null;
+		 if(data){
+		 flag = data["flag"];
+		 cnt = data["cnt"];
+		 code=data["code"];
+		 ans=data["ans"];
+		 ans_new=data["ans_new"];
+		 qid=data["qid"];
+		 }   
+		
+		 console.log('flag: '+flag + ' cnt: '+cnt );
+		 console.log('code: '+code + ' ans: '+ans  + 'qid'+qid);
+		if(flag){
+			 playSound("../../right.mp3"); 
+		var popUp = document.getElementById("popupcontent");
+		if(cnt==1 ){
+		popUp.style.visibility = "visible";
+		}else if(cnt==2 || cnt==3){
+		var popUp = document.getElementById("popupcontent_true");
+		popUp.style.visibility = "visible";
+		}
+		}else{
+			 playSound(  "../../fail.wav"); 
+			
+			var popUp = document.getElementById("popupcontent_err");
+			console.log("ans_new: "+ans_new);
+			$("#ques_ans").text("(正确答案为 (" + ans_new+" )") ;
+			
+			//$("#ques_ans").prop("text", "(正确答案为 (" + ans_new+" )")
+			popUp.style.visibility = "visible";
+		}
+		 disableCheckbox(false); 
+	 },
+	 error: function(){
+		 console.log('error');
+		 //alert('error');
+	 }
+ 
+ });    
+ 
+}else{
+ console.log('not checked');
+//Action for not checked
+ 
+}
+};
+
+
+function playSound(src){
+	 var _s = $("#bg_audio"); 
+	 if( _s  ){
+	  _s.prop("src",src);
+	  _s.prop("autoplay","autoplay");
+	 }
+
+};
+
+function adjWrapContent(){
+	var wrap_h = $("#wrap").height();
+	console.log("wrap height:"+ wrap_h);
+	fs = $(".choice").css('font-size');
+	lh = $("#wrap").css('line-height');
+/* 	console.log("font size: " + fs);
+	console.log("lh: "+ lh); */
+	/* if(!fs){
+		fs = "32";
+	} */
+	fs = parseInt(fs.substr(0,fs.length-2), 10);//remove px;
+	console.log("font size: " + fs);
+	if( wrap_h>400){
+		wrap_h = $("#wrap").height();
+		while(wrap_h>360){
+			fs -= 2;
+			$("#wrap").css("line-height", "0.8");
+			$(".choice").css('font-size', fs+'px' );
+			wrap_h = $("#wrap").height();
+			console.log("wrap height:"+ wrap_h);
+			console.lh("lh: "+ lh);
+		}
+		console.log("font size: " + fs)
+		console.log("lh: "+ lh);
+	}
+	
+}
+
+$(document).ready(function(){//页面加载完之后，自动执行该方法
+	console.log("ready");
+	var timer=null;
+	$("#content").hide();
+setTimeout(function(){//定时器 
+	$("#title").fadeOut(1000, function(){
+		
+$("#title").css("display","none")
+$("#head").animate( {top:'0px'}, 1500, function(){
+	
+/* $("#content").css("display","show"); */
+
+$("#content").show();	
+adjWrapContent();
+}
+)
+	
+	})
+},
+3000);
+
+
+});
+
+
+
+	</script>
+    
+    
+</body>
+</html>
