@@ -7,7 +7,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import com.alibaba.fastjson.JSON;
-import com.goebuy.entity.QuestionEntity;
 
 
 
@@ -20,7 +19,7 @@ public class Question implements Serializable{
 
 	/**
 	 */
-	private int id;
+	private Integer id;
 	
 	/**
 	 * 提问
@@ -52,11 +51,11 @@ public class Question implements Serializable{
 		this.id=id;
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -144,6 +143,8 @@ public class Question implements Serializable{
 		}
 		return obj;
 	}
+	
+	
 	
 //	public Question convertFromQuestionEntity(QuestionEntity questionEntity) {
 //		if(questionEntity!=null) {

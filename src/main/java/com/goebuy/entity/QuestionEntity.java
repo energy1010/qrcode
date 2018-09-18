@@ -1,6 +1,10 @@
 package com.goebuy.entity;
 
 import java.io.Serializable;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -9,6 +13,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.goebuy.Question;
 
 /**
  * 
@@ -35,25 +43,37 @@ public class QuestionEntity implements Serializable{
 	/**
 	 * 提问
 	 */
+	@Basic
+    @Column(name = "`question`",   nullable = false )
 	private String question;
 	
 	/** 选项 */
+	@Basic
+    @Column(name = "`choices`",  columnDefinition="text", nullable = false )
 	private String choices;// = new TreeMap<>();
 	
 	/** 答案选项  */
+	@Basic
+    @Column(name = "`ans_id`",   nullable =  false )
 	private String ans_id;// = new TreeSet<>();
 	
 	/** 答案解释 */
+	@Basic
+    @Column(name = "`ans_desc`",   nullable = true)
 	private String ans_desc;
+	
 	/** 说明 */
 	@Basic
     @Column(name = "`desc`",   nullable = true)
 	private String desc;
 	
-//	
-//	private String url;
-//	
-//	private String qrcode;
+	@Basic
+    @Column(name = "`url`",  unique=true, nullable = true)
+	private String url;
+	
+	@Basic
+    @Column(name = "`qrcode`", unique=true,  nullable = true)
+	private String qrcode;
 	
 	
 	
@@ -122,27 +142,52 @@ public class QuestionEntity implements Serializable{
 		this.desc = desc;
 	}
 
-//	public String getUrl() {
-//		return url;
-//	}
-//
-//	public void setUrl(String url) {
-//		this.url = url;
-//	}
-//
-//	public String getQrcode() {
-//		return qrcode;
-//	}
-//
-//	public void setQrcode(String qrcode) {
-//		this.qrcode = qrcode;
-//	}
-//	
-//	@Override
-//	public String toString() {
-//		return JSON.toJSONString(this);
-//	}
-//	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getQrcode() {
+		return qrcode;
+	}
+
+	public void setQrcode(String qrcode) {
+		this.qrcode = qrcode;
+	}
+	
+	@Override
+	public String toString() {
+		return JSON.toJSONString(this);
+	}
+	
+	public Question convert2Question() {
+		Question question = new Question(this.getId());
+		question.setAns_desc( this.getAns_desc() );
+		question.setUrl(this.getUrl());
+		question.setQrcode(this.getQrcode());
+		question.setQuestion(this.getQuestion());
+		question.setDesc(this.getDesc());
+		
+		@SuppressWarnings("unchecked")
+		Set<Integer> ans_set = JSON.parseObject(this.getAns_id(), new TypeReference<TreeSet>() {} );
+		@SuppressWarnings("unchecked")
+		Map<Integer, String>   cmMap = JSON.parseObject(this.getChoices(),  new TypeReference<TreeMap>() {});
+//		System.out.println(object);
+//		System.out.println(object1);
+		if(ans_set!=null) {
+			question.setAns_id(ans_set);
+		}
+		if(cmMap!=null) {
+			question.setChoices(cmMap);
+		}
+		System.out.println(question);
+		return question;
+	}
+	
+	
 //	public static QuestionEntity toObj(String jsonStr) {
 //		QuestionEntity obj = null;
 //		try {
