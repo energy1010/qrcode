@@ -10,7 +10,12 @@ zxing二维码生成
 * thymeleaf
 * js
 * jquery
-* todo: vue
+* todo: vue, angular, 
+* koa(express) zepto.js
+
+### 工具
+* webpack & babel
+* gulp
 
 
 http://localhost:8080/swagger-ui.html
