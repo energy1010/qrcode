@@ -27,6 +27,7 @@ public class WriteDb {
 		if(!new File("问茶108.txt").exists()) {
 			throw new RuntimeException("file not found");
 		}
+		service.deleteAllInBatch();
 		BufferedReader file;
 		String title = "";
 //		List<String> choicesList= new ArrayList<>(4);
@@ -85,6 +86,10 @@ public class WriteDb {
 					questionEntity.setAns_id(  JSON.toJSONString(question.getAns_id() ) );;
 					questionEntity.setQuestion(question.getQuestion());
 					questionEntity.setId(question.getId());
+					questionEntity.setDesc(question.getDesc());
+					questionEntity.setAns_desc(question.getAns_desc());
+					questionEntity.setQrcode(question.getQrcode());
+					questionEntity.setUrl(question.getUrl());
 //					System.out.println(questionEntity);
 					service.save(questionEntity);
 				/*	2、藏区打酥油茶的用茶是：c

@@ -1,6 +1,6 @@
 server:
   #address: 0.0.0.0
-  host: 192.168.1.100
+  #host: 192.168.1.100
   #host: 39.105.56.70
   port: 8080
   #contextPath=/prefix/
@@ -8,7 +8,8 @@ server:
     #uri-encoding: UTF-8
 spring:
   datasource:
-    host: 192.168.1.100
+    #host: 192.168.1.100
+    host: localhost
     #host: 39.105.56.70
     port: 3306
     #url: jdbc:mysql://39.105.56.70:3306/qrcode?useUnicode=true&characterEncoding=utf8
@@ -21,8 +22,8 @@ spring:
     show-sql: true
     #hibernate ddl auto(validate,create,update,create-drop)
     hibernate:
-      #ddl-auto: create
-      ddl-auto: update
+      ddl-auto: create
+      #ddl-auto: update
       #naming:
         #strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:

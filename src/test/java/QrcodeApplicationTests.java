@@ -95,7 +95,7 @@ public class QrcodeApplicationTests extends TestCase {
 		WriteDb writeDb = new WriteDb();
 	}
 	
-	@Ignore
+//	@Ignore
 	@Test
 	public void testWriteDb() {
 		writeDb.ReadFile();

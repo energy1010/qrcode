@@ -102,6 +102,21 @@ public class QrController {
 		if (questionEntity != null) {
 			question = questionEntity.convert2Question();
 		}
+//		boolean flag = false;
+//		int cnt = 0;
+//		if (question.getAns_id().contains(select)) {
+//			flag = true;
+//		}
+//		cnt = question.getAns_id().size();
+//		JSONObject js = new JSONObject();
+//		js.put("code", 200);
+//		js.put("msg", "OK");
+//		js.put("qid", qid);
+//		js.put("flag", flag);
+//		js.put("cnt", cnt);
+//		js.put("ans", getAnsStr(question.getAns_id()));
+//		js.put("ans_new", getAnsStr_new(question.getAns_id()));
+		
 //        question.addChoices(1, "choice 1");
 //        question.addChoices(2, "choice 2");
 //        question.addChoices(3, "choice 3");
@@ -111,6 +126,7 @@ public class QrController {
 //        question.setAns_desc("ans_desc");
 //        question.setDesc("desc");
 		model.addAttribute("question", question);
+		model.addAttribute("qr", question);
 		return "question/detail";
 	}
 
@@ -143,7 +159,6 @@ public class QrController {
 	@ResponseBody
 	public ResponseEntity<Object> check(@PathVariable int qid, @RequestParam int select) {
 		logger.info("check id: " + qid + " select: " + select);
-//        System.out.println("check id: "+ qid+ " select: "+select);
 		Question question = null;
 		QuestionEntity questionEntity = service.findOne(qid);
 		if (questionEntity != null) {
@@ -239,89 +254,101 @@ public class QrController {
 			questionEntity.setDesc("desc" + i);
 			questionEntity.setQuestion("question" + i);
 			service.saveAndFlush(questionEntity);
-//       	questionList.add(question);
+//			questionList.add(questionEntity);
 		}
 
 		model.addAttribute("questions", questionList);
 		return "question/list";
 	}
 
+	@RequestMapping(value = "/cleardb", method = RequestMethod.GET)
+	public String clearDb(ModelMap model) {
+		System.out.println("clearDb");
+		service.deleteAll();
+//		service.deleteAllInBatch();
+		return "question/list";
+	}
+	
 	@SuppressWarnings("resource")
 	@RequestMapping(value = "/initdb", method = RequestMethod.GET)
 	public String ReadFile(ModelMap model) {
 		System.out.println("testFile");
-		if (!new File("问茶108.txt").exists()) {
+		if(!new File("问茶108.txt").exists()) {
 			throw new RuntimeException("file not found");
 		}
 		BufferedReader file;
 		String title = "";
+//		List<String> choicesList= new ArrayList<>(4);
 		Map<Integer, String> choicesList = new TreeMap<>();
-		int lineNo = 0;
+		int lineNo=0;
+		int questNo=1;
 		try {
 			file = new BufferedReader(new FileReader("问茶108.txt"));
-			String line = null;
-
-			while ((line = file.readLine()) != null) {
-				if (line.trim().isEmpty())
-					continue;
-				if (lineNo == 0) {
+			String line =null;
+			
+			while( (line=file.readLine())!=null) {
+				if(line.trim().isEmpty()) continue;
+				if(lineNo==0) {
 					title = line;
-
-				} else {
+					
+				}else {
 					choicesList.put(lineNo, line);
 				}
-
+				
 				lineNo++;
-				if (lineNo % 4 == 0) {
-					lineNo = 0;
+				if(lineNo%4==0) {
+					lineNo= 0;
 					Question question = new Question();
-					if (title.isEmpty() || choicesList.isEmpty()) {
-						throw new RuntimeException("invalid line:" + line);
+					if(title.isEmpty() || choicesList.isEmpty() ) {
+						throw new RuntimeException("invalid line:"+line);
 					}
-					String ansString = title.substring(title.length() - 2).toLowerCase();
-					Set<Integer> ans_idSet = new TreeSet<>();
+					String ansString = title.substring(title.length()-1).toLowerCase();
+					Set<Integer> ans_idSet= new TreeSet<>();
+					
+					if (ansString.matches("[a-z]") ) {
+						title = title.substring(0, title.length()-1);
 
-					if (ansString.matches("[a-z]")) {
-						title = title.substring(0, title.length() - 1);
-						if (ansString.equalsIgnoreCase("a")) {
+						 if(ansString.equalsIgnoreCase("a")) {
 							ans_idSet.add(1);
-						} else if (ansString.equalsIgnoreCase("b")) {
+						}else if(ansString.equalsIgnoreCase("b")) {
 							ans_idSet.add(2);
-						} else if (ansString.equalsIgnoreCase("c")) {
+						}else if(ansString.equalsIgnoreCase("c")) {
 							ans_idSet.add(3);
-						} else {
-//						System.out.println(line);
+						}else{
+//							System.out.println(line);
 							throw new RuntimeException("invald choice: " + ansString);
 						}
-
-					} else {
+						
+					}else {
 						ans_idSet.add(1);
 						ans_idSet.add(2);
 						ans_idSet.add(3);
 					}
 
+					question.setId(questNo++);
 					question.setQuestion(title);
 					question.setChoices(choicesList);
 					question.setAns_id(ans_idSet);
-
 					QuestionEntity questionEntity = new QuestionEntity();
 					questionEntity.setChoices(JSON.toJSONString(question.getChoices()));
-					questionEntity.setAns_id(JSON.toJSONString(question.getAns_id()));
-					;
+					questionEntity.setAns_id(  JSON.toJSONString(question.getAns_id() ) );;
 					questionEntity.setQuestion(question.getQuestion());
+					questionEntity.setId(question.getId());
+					questionEntity.setDesc(question.getDesc());
+					questionEntity.setAns_desc(question.getAns_desc());
+					questionEntity.setQrcode(question.getQrcode());
+					questionEntity.setUrl(question.getUrl());
+//					System.out.println(questionEntity);
 					service.save(questionEntity);
-					/*
-					 * 2、藏区打酥油茶的用茶是：c a、湖南安化黑茶 b、云南普洱茶 c、四川雅安藏茶
-					 */
-//				System.out.println(question);
-
-					title = "";
+					title="";
 					choicesList.clear();
 				}
-				service.flush();
-//			System.out.println(line);
+				
+				System.out.println(line);
 			}
+			service.flush();
 		} catch (Exception e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "question/list";
