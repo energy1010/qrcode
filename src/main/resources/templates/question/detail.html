@@ -147,18 +147,17 @@ body {
 			background-image: url(../../frame.png);
 			background-size: 100%;
 			position: absolute;
-			/*visibility: hidden;*/
-			/* visibility: hidden; */
 			overflow: hidden;
 			/* 
 border:1px solid #333; */
 			text-align: center;
 			font-size: 16px;
 			z-index: 999;
-			 display: none; 
+			 visibility: hidden;
+			/*  display: none;  */
 		}
 
-	#popupcontent_err img 	#popupcontent_true img #popupcontent img {
+	#popupcontent_err img #popupcontent_true img  #popupcontent img {
 			width: 80%;
 		}
 
@@ -171,7 +170,7 @@ border:1px solid #333; */
 			background-image: url(../../frame.png);
 			background-size: 100%;
 			position: absolute;
-			visibility: hidden;
+			/*  visibility: hidden; */
 			overflow: hidden;
 			text-align: center;
 			font-size: 16px;
@@ -235,7 +234,6 @@ border:1px solid #333; */
 			height: .3rem;
 			background: url(../../close.png) 0 0 no-repeat;
 			background-size: 100%;
-
 		}
 		#popupcontent i::before,
 		#popupcontent_true i::before,
@@ -243,7 +241,6 @@ border:1px solid #333; */
 			display: none;
 		}
 		
-
 #wrap {
 			padding-left: 30px;
 
@@ -392,35 +389,37 @@ if ( checkbox.checked){
 		 console.log('code: '+code + ' ans: '+ans  + 'qid'+qid);
 		if(flag){
 			 playSound("../../right.mp3"); 
-		var popUp = document.getElementById("popupcontent");
+		var popUp = $("#popupcontent");
 		if(cnt==1 ){
-		popUp.style.visibility = "visible";
+		popUp[0].style.visibility = "visible";
+			//popUp.show();
+			popUp.css("visibility", "visible");
 		}else if(cnt==2 || cnt==3){
-		var popUp = document.getElementById("popupcontent_true");
-		popUp.style.visibility = "visible";
+		var popUp = $("#popupcontent_true");
+		popUp[0].style.visibility = "visible";
+		popUp.show();
 		}
 		}else{
 			 playSound(  "../../fail.wav"); 
 			
-			var popUp = document.getElementById("popupcontent_err");
+			var popUp = $("#popupcontent_err");
 			console.log("ans_new: "+ans_new);
 			$("#ques_ans").text("(正确答案为 " + ans_new+")" ) ;
 			
 			//$("#ques_ans").prop("text", "(正确答案为 " + ans_new+")“
-			popUp.style.visibility = "visible";
+			popUp[0].style.visibility = "visible";
+			popUp.show();
 		}
 		 disableCheckbox(false); 
 	 },
 	 error: function(){
 		 console.log('error');
-		 //alert('error');
 	 }
  
  });    
  
 }else{
  console.log('not checked');
-//Action for not checked
  
 }
 };
