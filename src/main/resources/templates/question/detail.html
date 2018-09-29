@@ -391,12 +391,12 @@ if ( checkbox.checked){
 			 playSound("../../right.mp3"); 
 		var popUp = $("#popupcontent");
 		if(cnt==1 ){
-		popUp[0].style.visibility = "visible";
-			//popUp.show();
-			popUp.css("visibility", "visible");
+		//popUp[0].style.visibility = "visible";
+			popUp.show();
+			//popUp.css("visibility", "visible");
 		}else if(cnt==2 || cnt==3){
 		var popUp = $("#popupcontent_true");
-		popUp[0].style.visibility = "visible";
+		//popUp[0].style.visibility = "visible";
 		popUp.show();
 		}
 		}else{
@@ -407,7 +407,7 @@ if ( checkbox.checked){
 			$("#ques_ans").text("(正确答案为 " + ans_new+")" ) ;
 			
 			//$("#ques_ans").prop("text", "(正确答案为 " + ans_new+")“
-			popUp[0].style.visibility = "visible";
+			//popUp[0].style.visibility = "visible";
 			popUp.show();
 		}
 		 disableCheckbox(false); 
